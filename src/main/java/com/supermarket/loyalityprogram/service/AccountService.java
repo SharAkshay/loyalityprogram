@@ -6,9 +6,13 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.supermarket.loyalityprogram.controller.AccountController;
 import com.supermarket.loyalityprogram.model.Account;
 import com.supermarket.loyalityprogram.repository.AccountRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class AccountService {
 

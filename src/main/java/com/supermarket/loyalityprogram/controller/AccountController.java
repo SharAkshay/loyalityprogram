@@ -39,6 +39,7 @@ public class AccountController {
 	@PostMapping("/account")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public AccountGetDTO createAccount(@RequestBody AccountPostDTO accountRequest) {
+		log.info("Request intercepted for create account");
 		Account account = accountService.createAccount(mapper.accountPostDTOToAccount(accountRequest));
 		return mapper.accountToAccountGetDTO(account);
 	}
@@ -47,14 +48,16 @@ public class AccountController {
 	@GetMapping(path = "/contact/{mobileNumber}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public AccountGetDTO getAccountDetailsByMobileNumber(@RequestParam(value = "mobileNumber") String mobileNumber) {
+		log.info("Request intercepted for get account details by mobileNumber : {}", mobileNumber);
 		Account account = accountService.getAccountDetailsByMobileNumber(mobileNumber);
 		return mapper.accountToAccountGetDTO(account);
 	}
 
 	@Operation(summary = "Get details of an account using unique Id-Card number.")
-	@GetMapping(path = "/id/{idCardNumber}")
+	@GetMapping(path = "/idCardNumber/{idCardNumber}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public AccountGetDTO getAccountDetailsByIdNumber(@PathVariable String idCardNumber) {
+	public AccountGetDTO getAccountDetailsByIdNumber(@RequestParam(value = "idCardNumber") String idCardNumber) {
+		log.info("Request intercepted for get account details by idCardNumber : {}", idCardNumber);
 		Account account = accountService.getAccountDetailsByIdCardNumber(idCardNumber);
 		return mapper.accountToAccountGetDTO(account);
 	}
@@ -62,7 +65,8 @@ public class AccountController {
 	@Operation(summary = "Get available points to redeem using unique Id-Card number.")
 	@GetMapping(path = "/availablePoints/{idCardNumber}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public BigDecimal getAvailablePoints(@PathVariable String idCardNumber) {
+	public BigDecimal getAvailablePoints(@RequestParam String idCardNumber) {
+		log.info("Request intercepted for get available points to redeem by idCardNumber : {}", idCardNumber);
 		return accountService.getAvailablePoints(idCardNumber);
 	}
 
@@ -70,21 +74,9 @@ public class AccountController {
 	@PostMapping(path = "/account/update/{idCardNumber}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public AccountGetDTO updateAccountDetails(@RequestBody AccountPostDTO accountRequest,
-			@PathVariable String idCardNumber) {
+			@RequestParam String idCardNumber) {
 		Account account = accountService.createAccount(mapper.accountPostDTOToAccount(accountRequest));
 		return mapper.accountToAccountGetDTO(account);
 	}
 
-	@Operation(summary = "Test url.")
-	@GetMapping(path = "/account/test")
-	@ResponseStatus(code = HttpStatus.OK)
-	public String test() {
-		return """
-				{
-					"name": "Akshay",
-					"surname": "Sharma",
-					"mobileNumber": "980000111"
-				}
-								""";
-	}
 }

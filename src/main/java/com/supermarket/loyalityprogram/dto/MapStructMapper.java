@@ -10,4 +10,5 @@ public interface MapStructMapper {
 	AccountGetDTO accountToAccountGetDTO(Account account);
 	Account accountPostDTOToAccount(AccountPostDTO accountPostDTO);
 	PurchaseGetDTO purchaseToPurchaseGetDTO(Purchase purchase);
+	Purchase purchasePostDTOToPurchase(PurchasePostDTO purchasePostDTO);
 }

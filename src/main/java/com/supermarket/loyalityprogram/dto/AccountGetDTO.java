@@ -22,8 +22,8 @@ public class AccountGetDTO {
 	@JsonProperty("mobileNumber")
 	private String mobileNumber;
 	
-	@JsonProperty("idCardNmber")
-	private String idCardNmber;
+	@JsonProperty("idCardNumber")
+	private String idCardNumber;
 	
 	@JsonProperty("createTime")
 	private LocalDateTime createTime;

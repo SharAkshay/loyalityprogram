@@ -3,6 +3,8 @@ package com.supermarket.loyalityprogram.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.supermarket.loyalityprogram.model.PurchaseItem;
 import com.supermarket.loyalityprogram.model.RedeemMethods;
@@ -14,7 +16,7 @@ import lombok.Setter;
 @Data
 @Setter
 @Getter
-public class PurchaseGetDTO {
+public class PurchasePostDTO {
 
 	@JsonProperty
 	private BigDecimal purchaseAmount;
@@ -29,11 +31,9 @@ public class PurchaseGetDTO {
 	private BigDecimal pointsToRedeem;
 	
 	@JsonProperty
-	private BigDecimal purchaseDiscount;
-	
-	@JsonProperty
 	private String cashierId;
 	
 	@JsonProperty
 	private List<PurchaseItem> purchaseItems;
+	
 }
