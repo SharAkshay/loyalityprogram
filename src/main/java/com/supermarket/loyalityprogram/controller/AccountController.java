@@ -21,6 +21,9 @@ import com.supermarket.loyalityprogram.model.Account;
 import com.supermarket.loyalityprogram.service.AccountService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -36,7 +39,15 @@ public class AccountController {
 	MapStructMapper mapper;
 
 	@Operation(summary = "Creation of account for new user.")
-	@PostMapping("/account")
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "201",
+					description = "New account is created",
+					content = {@Content(mediaType = "application/json")}),
+			@ApiResponse(responseCode = "500",
+			description = "An unexpected error occured",
+			content = {@Content(mediaType = "application/json")})
+	})
+	@PostMapping(value= "/account")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public AccountGetDTO createAccount(@RequestBody AccountPostDTO accountRequest) {
 		log.info("Request intercepted for create account");
