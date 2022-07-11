@@ -39,15 +39,12 @@ public class AccountController {
 	MapStructMapper mapper;
 
 	@Operation(summary = "Creation of account for new user.")
-	@ApiResponses(value= {
-			@ApiResponse(responseCode = "201",
-					description = "New account is created",
-					content = {@Content(mediaType = "application/json")}),
-			@ApiResponse(responseCode = "500",
-			description = "An unexpected error occured",
-			content = {@Content(mediaType = "application/json")})
-	})
-	@PostMapping(value= "/account")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "New account is created", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "500", description = "An unexpected error occured", content = {
+					@Content(mediaType = "application/json") }) })
+	@PostMapping(value = "/account")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public AccountGetDTO createAccount(@RequestBody AccountPostDTO accountRequest) {
 		log.info("Request intercepted for create account");
@@ -56,6 +53,13 @@ public class AccountController {
 	}
 
 	@Operation(summary = "Get details of an account using mobile number.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Account details successfully retrieved", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", description = "Account details not found", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "500", description = "An unexpected error occured", content = {
+					@Content(mediaType = "application/json") }) })
 	@GetMapping(path = "/contact/{mobileNumber}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public AccountGetDTO getAccountDetailsByMobileNumber(@RequestParam(value = "mobileNumber") String mobileNumber) {
@@ -65,6 +69,13 @@ public class AccountController {
 	}
 
 	@Operation(summary = "Get details of an account using unique Id-Card number.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Account details successfully retrieved", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", description = "Account details not found", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "500", description = "An unexpected error occured", content = {
+					@Content(mediaType = "application/json") }) })
 	@GetMapping(path = "/idCardNumber/{idCardNumber}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public AccountGetDTO getAccountDetailsByIdNumber(@RequestParam(value = "idCardNumber") String idCardNumber) {
@@ -74,6 +85,13 @@ public class AccountController {
 	}
 
 	@Operation(summary = "Get available points to redeem using unique Id-Card number.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Account details successfully retrieved", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", description = "Account details not found", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "500", description = "An unexpected error occured", content = {
+					@Content(mediaType = "application/json") }) })
 	@GetMapping(path = "/availablePoints/{idCardNumber}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public BigDecimal getAvailablePoints(@RequestParam String idCardNumber) {
@@ -82,6 +100,11 @@ public class AccountController {
 	}
 
 	@Operation(summary = "Update the account details (Name, Surname, mobile number) using unique Id-Card number.")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Account details updated", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "500", description = "An unexpected error occured", content = {
+					@Content(mediaType = "application/json") }) })
 	@PostMapping(path = "/account/update/{idCardNumber}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public AccountGetDTO updateAccountDetails(@RequestBody AccountPostDTO accountRequest,

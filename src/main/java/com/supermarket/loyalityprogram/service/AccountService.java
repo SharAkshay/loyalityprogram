@@ -6,7 +6,9 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.supermarket.loyalityprogram.constants.ApplicationConstants;
 import com.supermarket.loyalityprogram.controller.AccountController;
+import com.supermarket.loyalityprogram.exceptions.UserNotFoundException;
 import com.supermarket.loyalityprogram.model.Account;
 import com.supermarket.loyalityprogram.repository.AccountRepository;
 
@@ -18,7 +20,7 @@ public class AccountService {
 
 	@Autowired
 	AccountRepository accountRepository;
-	
+
 	public Account createAccount(Account account) {
 		account.setIdCardNumber(generateIdNumber());
 		account.setCreateTime(LocalDateTime.now());
@@ -26,21 +28,27 @@ public class AccountService {
 		account.setLoyalityPoints(new BigDecimal(0));
 		return accountRepository.save(account);
 	}
-	
+
 	public Account getAccountDetailsByMobileNumber(String mobileNumber) {
-		return accountRepository.findByMobileNumber(mobileNumber).orElseThrow();
+		return accountRepository.findByMobileNumber(mobileNumber)
+				.orElseThrow(() -> new UserNotFoundException("User with given mobile number not found",
+						ApplicationConstants.USER_NOT_FOUND));
 	}
-	
+
 	public Account getAccountDetailsByIdCardNumber(String idCardNumber) {
-		return accountRepository.findByIdCardNumber(idCardNumber).orElseThrow();
+		return accountRepository.findByIdCardNumber(idCardNumber)
+				.orElseThrow(() -> new UserNotFoundException("User with given ID card number not found",
+						ApplicationConstants.USER_NOT_FOUND));
 	}
-	
+
 	public BigDecimal getAvailablePoints(String idCardNumber) {
-		Account account = accountRepository.findByIdCardNumber(idCardNumber).orElseThrow();
+		Account account = accountRepository.findByIdCardNumber(idCardNumber)
+				.orElseThrow(() -> new UserNotFoundException("User with given ID card number not found",
+						ApplicationConstants.USER_NOT_FOUND));
 		account.getLoyalityPoints();
 		return account.getLoyalityPoints();
 	}
-	
+
 	private String generateIdNumber() {
 		String alphaNum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789";
 		StringBuilder sb = new StringBuilder(10);

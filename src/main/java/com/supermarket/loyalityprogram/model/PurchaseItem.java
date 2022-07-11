@@ -11,12 +11,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Entity
 @Data
+@AllArgsConstructor
 @Table(name = "purchaseitem")
 public class PurchaseItem {
+
+	public PurchaseItem(String itemName, BigDecimal itemcost, Integer quantity, BigDecimal totalCost) {
+		this.itemName= itemName;
+		this.itemcost=itemcost;
+		this.quantity=quantity;
+		this.totalCost=totalCost;
+	}
 
 	@Id
 	@Column

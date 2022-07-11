@@ -14,10 +14,15 @@ import com.supermarket.loyalityprogram.dto.AccountGetDTO;
 import com.supermarket.loyalityprogram.dto.MapStructMapper;
 import com.supermarket.loyalityprogram.dto.PurchaseGetDTO;
 import com.supermarket.loyalityprogram.dto.PurchasePostDTO;
+import com.supermarket.loyalityprogram.exceptions.InvalidCashierIdException;
 import com.supermarket.loyalityprogram.model.Account;
 import com.supermarket.loyalityprogram.model.Purchase;
 import com.supermarket.loyalityprogram.service.LoyalityService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -30,24 +35,19 @@ public class LoyalityController {
 
 	@Autowired
 	MapStructMapper mapper;
-	/*
-	 * @PutMapping("/update")
-	 * 
-	 * @ResponseStatus(code = HttpStatus.OK) public AccountGetDTO
-	 * updateLoyalityPoints(@RequestBody PurchasePostDTO purchasePostDTO,
-	 * 
-	 * @RequestParam String idCardNumber) { log.
-	 * info("Request intercepted for new purchase without redemption for idCardNUmber : {}"
-	 * , idCardNumber); Account account =
-	 * loyalityService.addLoyalityPoints(mapper.purchasePostDTOToPurchase(
-	 * purchasePostDTO), idCardNumber); return
-	 * mapper.accountToAccountGetDTO(account); }
-	 */
-
+	
+	@Operation(summary = "Purchase is processed with option of redeeming the loyality points")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Purchase completed", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "404", description = "Account details not found", content = {
+					@Content(mediaType = "application/json") }),
+			@ApiResponse(responseCode = "500", description = "An unexpected error occured", content = {
+					@Content(mediaType = "application/json") }) })
 	@PostMapping("/redeem/{idCardNumber}")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public PurchaseGetDTO redeemLoyalityPoints(@RequestBody PurchasePostDTO purchasePostDTO,
-			@RequestParam(value = "idCardNumber") String idCardNumber) {
+			@RequestParam(value = "idCardNumber") String idCardNumber) throws InvalidCashierIdException {
 		log.info("Request intercepted for new purchase with points redemption for idCardNumber : {}", idCardNumber);
 		Purchase purchaseUpdated = loyalityService
 				.redeemLoyalityPoints(mapper.purchasePostDTOToPurchase(purchasePostDTO), idCardNumber);
