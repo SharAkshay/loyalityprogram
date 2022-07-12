@@ -10,6 +10,6 @@ public final class ApplicationConstants {
 	public static final BigDecimal POINTS_ADDITION_VALUE = new BigDecimal(10);
 	public static final String CASHIER_NOT_FOUND = "CASHIER_NOT_FOUND-404";
 	public static final String USER_NOT_FOUND = "USER_NOT_FOUND-404";
-	public static final String ACCOUNT_ALREADY_REGISTERED = "ACCOUNT_ALREADY_REGISTERED";
+	public static final String INVALID_REDEEM_POINT_VALUE = "INVALID_REDEEM_POINT_VALUE-400";
 	public static final String WATER_BOTTLE_VALUE = "ilma";
 }

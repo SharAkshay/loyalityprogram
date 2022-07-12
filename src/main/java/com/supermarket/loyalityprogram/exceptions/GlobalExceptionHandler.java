@@ -22,12 +22,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	}
 
-	@ExceptionHandler(AccountAlreadyRegisteredException.class)
+	@ExceptionHandler(InvalidPointRedeemValueException.class)
 	protected ResponseEntity handleAccountAlreadyRegisteredException(
-			AccountAlreadyRegisteredException accountAlreadyRegisteredException) {
-		return ResponseEntity.badRequest()
-				.body(ErrorResponse.builder().code(accountAlreadyRegisteredException.getCode())
-						.message(accountAlreadyRegisteredException.getMessage()).build());
+			InvalidPointRedeemValueException invalidPointRedeemValueException) {
+		return ResponseEntity.badRequest().body(ErrorResponse.builder().code(invalidPointRedeemValueException.getCode())
+				.message(invalidPointRedeemValueException.getMessage()).build());
 
 	}
 }

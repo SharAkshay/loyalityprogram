@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.supermarket.loyalityprogram.constants.ApplicationConstants;
 import com.supermarket.loyalityprogram.exceptions.InvalidCashierIdException;
+import com.supermarket.loyalityprogram.exceptions.InvalidPointRedeemValueException;
 import com.supermarket.loyalityprogram.exceptions.UserNotFoundException;
 import com.supermarket.loyalityprogram.model.Account;
 import com.supermarket.loyalityprogram.model.Cashier;
@@ -38,7 +39,8 @@ public class LoyalityService {
 		purchase.setPurchaseItems(getPurchaseItems());
 		purchase.setPurchaseAmount(getPurchaseAmount(getPurchaseItems()));
 		Account account = accountRepository.findByIdCardNumber(idCardNumber)
-				.orElseThrow(() -> new UserNotFoundException("User with given ID card number not found", ApplicationConstants.USER_NOT_FOUND));
+				.orElseThrow(() -> new UserNotFoundException("User with given ID card number not found",
+						ApplicationConstants.USER_NOT_FOUND));
 		if (!purchase.getRedeemLoyality()) {
 			purchase.setPurchaseDiscount(new BigDecimal(0));
 			if (purchase.getPurchaseAmount().compareTo(ApplicationConstants.MINIMUM_PURCHASE_VALUE) == -1) {
@@ -74,6 +76,10 @@ public class LoyalityService {
 				purchaseRepository.save(purchase);
 				return purchase;
 			} else {
+				if (purchase.getPointsToRedeem().intValue() % 100 != 0
+						&& purchase.getPointsToRedeem().intValue() % 150 != 0)
+					throw new InvalidPointRedeemValueException("Invalid redeem points value",
+							ApplicationConstants.INVALID_REDEEM_POINT_VALUE);
 				BigDecimal availableLoyalityPoints = account.getLoyalityPoints();
 				switch (purchase.getRedeemMethod()) {
 				case FREE_BOTTLE -> {
@@ -148,7 +154,8 @@ public class LoyalityService {
 
 	private List<PurchaseItem> getPurchaseItems() {
 		List<PurchaseItem> purchaseList = new ArrayList<PurchaseItem>();
-		purchaseList.add(new PurchaseItem(ApplicationConstants.WATER_BOTTLE_VALUE, new BigDecimal(20), Integer.valueOf(50), new BigDecimal(1000)));
+		purchaseList.add(new PurchaseItem(ApplicationConstants.WATER_BOTTLE_VALUE, new BigDecimal(20),
+				Integer.valueOf(50), new BigDecimal(1000)));
 		purchaseList.add(new PurchaseItem("Hobz", new BigDecimal(4), Integer.valueOf(5), new BigDecimal(20)));
 		purchaseList.add(new PurchaseItem("Patata", new BigDecimal(4), Integer.valueOf(5), new BigDecimal(20)));
 		return purchaseList;

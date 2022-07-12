@@ -9,12 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountAlreadyRegisteredException extends RuntimeException { 
+public class InvalidPointRedeemValueException extends RuntimeException { 
 	
 	private String code;
     private String message;
     
-    public AccountAlreadyRegisteredException(String errorMessage) {
+    public InvalidPointRedeemValueException(String errorMessage) {
         super(errorMessage);
     }
 
