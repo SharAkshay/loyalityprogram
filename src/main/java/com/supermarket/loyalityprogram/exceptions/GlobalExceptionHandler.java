@@ -21,4 +21,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 				.message(userNotFoundException.getMessage()).build());
 
 	}
+
+	@ExceptionHandler(AccountAlreadyRegisteredException.class)
+	protected ResponseEntity handleAccountAlreadyRegisteredException(
+			AccountAlreadyRegisteredException accountAlreadyRegisteredException) {
+		return ResponseEntity.badRequest()
+				.body(ErrorResponse.builder().code(accountAlreadyRegisteredException.getCode())
+						.message(accountAlreadyRegisteredException.getMessage()).build());
+
+	}
 }

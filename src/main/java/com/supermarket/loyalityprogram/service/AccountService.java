@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.supermarket.loyalityprogram.constants.ApplicationConstants;
 import com.supermarket.loyalityprogram.controller.AccountController;
+import com.supermarket.loyalityprogram.exceptions.AccountAlreadyRegisteredException;
 import com.supermarket.loyalityprogram.exceptions.UserNotFoundException;
 import com.supermarket.loyalityprogram.model.Account;
 import com.supermarket.loyalityprogram.repository.AccountRepository;
