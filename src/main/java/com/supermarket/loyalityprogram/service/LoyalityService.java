@@ -80,7 +80,7 @@ public class LoyalityService {
 					log.info("Enter processing for redeem type as FREE_BOTTLE");
 					List<PurchaseItem> purchaseItems = purchase.getPurchaseItems();
 					List<PurchaseItem> purchaseItemsFiltered = purchaseItems.stream().map((item) -> {
-						if (item.getItemName().equalsIgnoreCase("Water bottle")) {
+						if (item.getItemName().equalsIgnoreCase(ApplicationConstants.WATER_BOTTLE_VALUE)) {
 							BigDecimal quantityOfDiscountedBottles = pointsToRedeem
 									.divide(ApplicationConstants.BOTTLE_REDEEM_VALUE);
 							BigDecimal totalDiscount = item.getItemcost().multiply(quantityOfDiscountedBottles);
@@ -126,7 +126,7 @@ public class LoyalityService {
 	private List<Items> getItemList() {
 
 		List<Items> listOfItems = new ArrayList<Items>();
-		listOfItems.add(new Items("ilma", new BigDecimal(20)));
+		listOfItems.add(new Items(ApplicationConstants.WATER_BOTTLE_VALUE, new BigDecimal(20)));
 		listOfItems.add(new Items("Hobz", new BigDecimal(4)));
 		listOfItems.add(new Items("Patata", new BigDecimal(4)));
 		listOfItems.add(new Items("Basla", new BigDecimal(6)));
@@ -148,7 +148,7 @@ public class LoyalityService {
 
 	private List<PurchaseItem> getPurchaseItems() {
 		List<PurchaseItem> purchaseList = new ArrayList<PurchaseItem>();
-		purchaseList.add(new PurchaseItem("ilma", new BigDecimal(20), Integer.valueOf(50), new BigDecimal(1000)));
+		purchaseList.add(new PurchaseItem(ApplicationConstants.WATER_BOTTLE_VALUE, new BigDecimal(20), Integer.valueOf(50), new BigDecimal(1000)));
 		purchaseList.add(new PurchaseItem("Hobz", new BigDecimal(4), Integer.valueOf(5), new BigDecimal(20)));
 		purchaseList.add(new PurchaseItem("Patata", new BigDecimal(4), Integer.valueOf(5), new BigDecimal(20)));
 		return purchaseList;
